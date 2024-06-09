@@ -1,0 +1,62 @@
+services:
+    php:
+        build: ./php
+        container_name: php-app
+        expose:
+            - 9000
+        restart: always
+        volumes:
+            - php-app_data:/var/www
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - app-network
+
+    nginx:
+        build: ./nginx
+        container_name: nginx-app
+        restart: always
+        volumes:
+            - ./php/src:/var/www
+        ports:
+            - 8000:80
+        depends_on:
+            - php
+            - db
+        networks:
+            - app-network
+
+    db:
+        build: ./psql
+        container_name: postgres-app
+        restart: always
+        volumes:
+            - ./psql/pgdata:/var/lib/postgresql/data
+            - ./psql/init.sql:/docker-entrypoint-initdb.d/init.sql # Only executed when the container is created with a empty data directory
+        environment:
+            POSTGRES_DB: app # Database name
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: 1q2w3e4r
+        ports:
+            - 5432:5432
+        networks:
+            - app-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U admin -d app"] # '-d' specifies the database name
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+# 'chmod -R 777 ./php/src' : To avoid permission issues.
+volumes:
+    php-app_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: ./php/src
+            o: bind
+
+networks:
+    app-network:
+        driver: bridge
