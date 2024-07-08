@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bootstrap script is loaded before test run -->
+<phpunit colors="true" bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="Unit Tests">
+          <directory>tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

@@ -8,7 +8,7 @@ use App\Exceptions;
 
 class Router
 {
-  private array $routes;
+  private array $routes = [];
 
   public function register(string $route, callable|array $action, string $method): self
   {
@@ -27,6 +27,7 @@ class Router
   {
     return $this->register($route, $action, "post");
   }
+
   // Parse the request URI and call the appropriate action
   public function resolve(string $requestUri, string $requestMethod)
   {
@@ -54,5 +55,10 @@ class Router
 
     http_response_code(404);
     throw new Exceptions\RouteNotFoundException();
+  }
+
+  public function routes(): array
+  {
+    return $this->routes;
   }
 }
