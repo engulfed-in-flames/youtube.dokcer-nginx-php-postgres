@@ -6,6 +6,10 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\RouteNotFoundException;
+use App\Services\InvoiceService;
+use App\Services\EmailService;
+use App\Services\PaymentGatewayService;
+use App\Services\SalesTaxService;
 
 class App
 {

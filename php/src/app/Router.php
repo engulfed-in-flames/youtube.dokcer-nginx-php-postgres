@@ -10,6 +10,10 @@ class Router
 {
   private array $routes = [];
 
+  public function __construct(private Container $container)
+  {
+  }
+
   public function register(string $route, callable|array $action, string $method): self
   {
     $lcMethod = strtolower($method);
@@ -44,7 +48,7 @@ class Router
       [$class, $method] = $action;
 
       if (class_exists($class)) {
-        $class = new $class();
+        $class = $this->container->get($class);
 
         if (method_exists($class, $method)) {
           // Specifying the arguments is better than passing individual arguments
