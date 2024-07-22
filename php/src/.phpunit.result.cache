@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Tests\\Unit\\Services\\InvoiceServiceTest::test_that_it_processes_invoice":7},"times":{"Tests\\Unit\\Services\\InvoiceServiceTest::test_that_it_processes_invoice":0.006,"Tests\\Unit\\Services\\InvoiceServiceTest::test_that_it_sends_receipt_email_when_invoice_is_processed":0.002}}
