@@ -11,5 +11,5 @@ To get started with this project, follow these steps:
 ```sh
 git clone https://github.com/engulfedInFlames/php-nginx-postgres.git
 cd php-nginx-postgres
-docker-compose up --build
+docker compose up --build
 ```
