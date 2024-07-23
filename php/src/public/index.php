@@ -8,6 +8,7 @@ use App\Config;
 use App\App;
 use App\Controllers\HomeController;
 use App\Controllers\InvoiceController;
+use App\Controllers\GeneratorExampleController;
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
@@ -22,6 +23,7 @@ $router = new Router($container);
 
 $router
   ->get("/", [HomeController::class, "index"])
+  ->get("/examples/generator", [GeneratorExampleController::class, "index"])
   ->get("/invoices", [InvoiceController::class, "index"])
   ->get("/invoices/create", [InvoiceController::class, "create"])
   ->post("/invoices/create", [InvoiceController::class, "store"]);

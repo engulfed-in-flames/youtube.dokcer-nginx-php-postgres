@@ -16,4 +16,12 @@ abstract class Model
   {
     $this->db = App::db();
   }
+
+  // Do NOT use in production
+  public function fetchLazy(\PDOStatement $stmt)
+  {
+    foreach ($stmt as $record) {
+      yield $record;
+    }
+  }
 }
