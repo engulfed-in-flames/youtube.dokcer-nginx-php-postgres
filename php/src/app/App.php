@@ -6,21 +6,26 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\RouteNotFoundException;
-use App\Services\InvoiceService;
-use App\Services\EmailService;
 use App\Services\PaymentGatewayService;
-use App\Services\SalesTaxService;
+use App\Services\PaymentGatewayInterface;
 
 class App
 {
   private static Database $db;
 
   public function __construct(
+    protected Container $container,
     protected Router $router,
     protected array $request,
     protected Config $config,
   ) {
     static::$db = new Database($config->get("db") ?? []);
+
+    $this->container->set(
+      // What is the benefit of injecting interface? Loose coupling, easy to swap
+      PaymentGatewayInterface::class,
+      PaymentGatewayService::class
+    );
   }
 
   public static function db(): Database
